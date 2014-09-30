@@ -8,8 +8,6 @@ import org.hc.enums.Turno;
 
 public class Perfil {
 	
-	private static int id = 0;
-	
 	private String senha;
 	private Map<DiaDaSemana, Turno> horarios;
 	private String descricao;
@@ -21,7 +19,7 @@ public class Perfil {
 	}
 	
 	
-	public void setHorarios(DiaDaSemana dia, Turno turno){
+	public void addHorario(DiaDaSemana dia, Turno turno){
 		horarios.put(dia, turno);
 	}
 	
@@ -30,20 +28,4 @@ public class Perfil {
 		return horarios;
 	}
 	
-	
-	public void cadHorarios(Map<DiaDaSemana, Turno> h){
-		horarios.putAll(h);
-	}
-	
-	
-	public static void incId(){
-		id++;
-	}
-	
-	
-	public static void decId(){
-		id--;
-	}
-	
-
 }

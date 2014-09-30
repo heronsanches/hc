@@ -1,4 +1,4 @@
-package org.hc.model;
+/*package org.hc.model;
 
 public class PerfilDB {
 	
@@ -7,4 +7,4 @@ public class PerfilDB {
 		return false;
 	}
 
-}
+}*/

@@ -1,5 +1,6 @@
 package org.hc.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,13 +17,22 @@ public class Funcionario {
 	private List<Perfil> perfis;
 	
 	
+	public Funcionario(){
+		perfis = new ArrayList<Perfil>();
+	}
+	
+	
 	public void addPerfil(Perfil p){
 		perfis.add(p);
 	}
 	
 
 	public Map<DiaDaSemana, Turno> listarHorarios(Perfil p){
-		return p.getHorarios();
+		
+		if(perfis.contains(p))
+			return p.getHorarios();
+		
+		return null;
 	}
 	
 	
@@ -81,10 +91,10 @@ public class Funcionario {
 		return perfis;
 	}
 
-
+	/*
 	public void setPerfis(List<Perfil> perfis) {
 		this.perfis = perfis;
-	}
+	}*/
 	
 
 }

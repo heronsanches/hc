@@ -1,4 +1,4 @@
-package org.hc.model;
+/*package org.hc.model;
 
 public class FuncionarioDB {
 
@@ -16,4 +16,4 @@ public class FuncionarioDB {
 	}
 	
 	
-}
+}*/

@@ -1,5 +1,3 @@
-import org.hc.enums.DiaDaSemana;
-
 
 public class MainTest {
 	

@@ -1,4 +1,4 @@
-package org.hc.model;
+/*package org.hc.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,4 +33,4 @@ public class DB {
 		
 	}
 
-}
+}*/

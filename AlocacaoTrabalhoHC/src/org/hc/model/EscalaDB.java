@@ -1,4 +1,4 @@
-package org.hc.model;
+/*package org.hc.model;
 
 public class EscalaDB {
 	
@@ -7,4 +7,4 @@ public class EscalaDB {
 		return false;
 	}
 
-}
+}*/

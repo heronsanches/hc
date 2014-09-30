@@ -1,5 +1,6 @@
 package org.hc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,11 @@ public class Escala {
 	private Date data;
 	private List<Perfil> perfis;
 	private Setor setor;
+	
+	
+	public Escala(){
+		perfis = new ArrayList<Perfil>();
+	}
 	
 	
 	public void addPerfil(Perfil p){
@@ -35,10 +41,10 @@ public class Escala {
 		return perfis;
 	}
 	
-	
+	/*
 	public void setPerfis(List<Perfil> perfis) {
 		this.perfis = perfis;
-	}
+	}*/
 	
 	
 	public Setor getSetor() {
