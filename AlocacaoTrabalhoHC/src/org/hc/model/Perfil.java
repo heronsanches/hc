@@ -12,6 +12,7 @@ public class Perfil {
 	private Map<DiaDaSemana, Turno> horarios;
 	private String descricao;
 	private Funcionario funcionario;
+	private boolean ativo;
 	
 	
 	public Perfil(){
