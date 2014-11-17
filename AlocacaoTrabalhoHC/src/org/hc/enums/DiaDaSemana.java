@@ -1,5 +1,8 @@
 package org.hc.enums;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum DiaDaSemana {
 	
 	SEG("Segunda-Feira"), 
@@ -12,7 +15,7 @@ public enum DiaDaSemana {
 	
 	
 	private final String dia;
-	
+
 	
 	private DiaDaSemana(String dia) {
 		

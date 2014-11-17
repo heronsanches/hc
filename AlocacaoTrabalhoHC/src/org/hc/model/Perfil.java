@@ -16,7 +16,12 @@ public class Perfil {
 	
 	
 	public Perfil(){
-		this.horarios = new HashMap<DiaDaSemana, Turno>();
+		
+		horarios = new HashMap<DiaDaSemana, Turno>();
+		
+		for(DiaDaSemana d: DiaDaSemana.values())				
+				horarios.put(d, null);
+
 	}
 	
 	

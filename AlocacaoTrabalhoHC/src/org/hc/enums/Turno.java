@@ -3,9 +3,9 @@ package org.hc.enums;
 public enum Turno {
 	
 	MATUTINO("Matutino"),
-	VESPERTINO("Vespertino"),
-	NOTURNO("Noturno"),
-	MADRUGADA("Madrugada");
+	VESPERTINO("Vespertino");
+	//NOTURNO("Noturno"),
+	//MADRUGADA("Madrugada");
 	
 	
 	private final String turno;

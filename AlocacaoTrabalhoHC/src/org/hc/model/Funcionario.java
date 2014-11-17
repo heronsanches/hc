@@ -12,6 +12,7 @@ public class Funcionario {
 	private String cpf;
 	private String cep;
 	private String email;
+	private String nome;
 	private char sexo;
 	private String telefone;
 	private List<Perfil> perfis;
@@ -39,6 +40,16 @@ public class Funcionario {
 	//getters and setters
 	public String getCpf() {
 		return cpf;
+	}
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 
