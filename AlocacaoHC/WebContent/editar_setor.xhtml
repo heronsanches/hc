@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core">
+   
+<h:head><title>Editar Setor</title></h:head>
+
+<h:body >
+<h:form>
+    <p:growl id="msgs" showDetail="true" />
+ 
+    <h:panelGrid columns="2" cellpadding="5">
+        
+        <p:messages autoUpdate="true"/>
+        <p:inputText id="novoNome" value="#{setoresView.novoNome}" placeholder="Novo nome" 
+            required="true" label="Novo nome"/>
+        <p:message for="novoNome"/>
+		      
+	  </h:panelGrid>  
+	 
+     <p:commandButton value="Atualizar" 
+      actionListener="#{setoresView.fecharDialogEditarSetor(setoresView.novoNome)}"/>
+      
+</h:form>
+</h:body>
+</html>

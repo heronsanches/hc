@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+<h:head><title>Administrar Setores</title></h:head>
+<ui:decorate template="menubar.xhtml"/>
+
+<h:body >
+
+	<p:dataTable var="setor" value="#{setoresView.setores}">
+		
+	   <p:column headerText="Nome Setor">
+	   
+	        <h:outputText value="#{setor.nome}" />
+	        
+	    </p:column>
+	    
+	    <p:column width="20%">
+	    
+           <p:growl id="growl" showDetail="true" />
+           <p:commandButton icon="ui-icon-pencil"  actionListener="#{setoresView.editarSetor(setor)}">
+             <p:ajax event="dialogReturn" listener="#{setoresView.retornoEditarSetor}"  update="growl" />
+           </p:commandButton>
+           
+	    </p:column>
+	 
+	    <p:column headerText="Funcionários Setor" width="30%">
+	    
+	       <p:growl id="growl2" showDetail="true" />
+	       <h:outputText value="&#160;&#160;" />
+	       <p:commandButton icon="ui-icon-script"   update="growl2" actionListener="#{setoresView.showFuncionarios(setor)}">
+             <p:ajax event="dialogReturn" listener="#{setoresView.retornoShowFuncionarioSetor}"  update="growl" />
+	       </p:commandButton>
+	       <h:outputText value="&#160;&#160;" />
+	       <p:commandButton  icon="ui-icon-pencil"  update="growl2" />
+	       
+	    </p:column>
+	       
+	</p:dataTable>
+</h:body>
+</html>

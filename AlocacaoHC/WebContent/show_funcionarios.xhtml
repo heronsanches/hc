@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+     
+<h:head><title>Todos Funcionários</title></h:head>
+     
+    <h:body>
+       <p:dataTable var="setor" value="#{setoresView.setor}" >
+            <p:column >
+               <h:outputText value="#{setor.nome}" />
+            </p:column>
+        </p:dataTable>
+        <p:dataTable var="funcionario" value="#{setoresView.funcionarios}"
+           scrollable="true" scrollWidth="100%" scrollHeight="350" >
+
+            <p:column headerText="Nome">
+                <h:outputText value="#{funcionario.nome}" />
+            </p:column>
+ 
+            <p:column headerText="CPF">
+                <h:outputText value="#{funcionario.cpf}" />
+            </p:column>
+ 
+            <p:column headerText="Email">
+                <h:outputText value="#{funcionario.email}" />
+            </p:column>
+ 
+            <p:column headerText="Sexo">
+                <h:outputText value="#{funcionario.sexo}" />
+            </p:column>
+            
+            <p:column headerText="Telefone">
+                <h:outputText value="#{funcionario.telefone}" />
+            </p:column>
+            
+            <p:column headerText="CEP">
+                <h:outputText value="#{funcionario.cep}" />
+            </p:column>
+        </p:dataTable>
+    </h:body>
+     
+</html>
