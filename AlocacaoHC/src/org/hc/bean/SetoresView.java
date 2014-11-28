@@ -1,10 +1,13 @@
 package org.hc.bean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.hc.model.DB;
@@ -18,6 +21,7 @@ public class SetoresView {
 	
 	private String novoNome;
 	private Setor setor;
+	private List<Setor> setores = DB.getDB().getSetores();
 	private Funcionario funcionarioSelecionadoInstancia;
 	private String funcionarioSelecionado;
 	private String novoNomeFuncionario;
@@ -28,6 +32,11 @@ public class SetoresView {
 	private String novoTelefone;
 	
 	
+	public void setFuncionarioSelecionado(String funcionarioSelecionado) {
+		this.funcionarioSelecionado = funcionarioSelecionado;
+		instanciaFuncionarioSelecionado();
+	}
+
 	public String getNovoNomeFuncionario() {
 		return novoNomeFuncionario;
 	}
@@ -80,15 +89,14 @@ public class SetoresView {
 		return funcionarioSelecionado;
 	}
 
-	public void setFuncionarioSelecionado(String funcionarioSelecionado) {
+	//TODO nao funciona
+	public void instanciaFuncionarioSelecionado() {
 				
     	for(Funcionario f: setor.getFuncionarios()){
     		
-    		if(f.getNome().contains(funcionarioSelecionado)){
-    			
-    			this.funcionarioSelecionado = funcionarioSelecionado;
+    		if(f.getNome().equals(funcionarioSelecionado)){
+    			System.out.println("instanciou funcionarioooo");
     			funcionarioSelecionadoInstancia = f;
-    			System.out.print("flkhghgsdkjhgsdj");
     			
     		}
     		
@@ -123,7 +131,7 @@ public class SetoresView {
 	
 
 	public List<Setor> getSetores(){
-		 return DB.getDB().getSetores();
+		 return setores;
 	}
 	
 	
@@ -134,7 +142,6 @@ public class SetoresView {
 		
 	}
 	
-    
     
 	public void fecharDialogEditarSetor(String novoNome) {
         RequestContext.getCurrentInstance().closeDialog(novoNome);
@@ -161,7 +168,8 @@ public class SetoresView {
     
     //TODO
     public void showEditarFuncionario(){
-    	
+
+    	System.out.println("show funcionario");
     	RequestContext.getCurrentInstance().openDialog("editar_funcionario");
     	
     }
@@ -170,6 +178,29 @@ public class SetoresView {
     //TODO
     public void retornoEditarFuncionario(){
     	
+    	Funcionario f = new Funcionario();
+        f.setCep(novoCEP);
+        f.setCpf(novoCPF);
+        f.setEmail(novoEmail);
+        f.setNome(novoNomeFuncionario);
+        f.setTelefone(novoTelefone);
+        
+       if( setor.getFuncionarios().remove(funcionarioSelecionadoInstancia))
+    	   System.out.println("removeu");
+       
+       if(setor.cadFuncionario(f))
+    	   System.out.println("cadastrou");
+        
+    	FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Atualizado com sucesso!", null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    	
+    }
+    
+    
+    public void fecharDialogEditarFuncionario(){
+    	
+    	RequestContext.getCurrentInstance().closeDialog(null);
+        
     }
     
     
@@ -178,12 +209,14 @@ public class SetoresView {
     public List<String> listaFuncionarios(String caracteres){
     	
     	List<String> funcionarios = new ArrayList<String>();
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	this.setor = (Setor) UIComponent.getCurrentComponent(context).getAttributes().get("setor");
     	
     	for(Funcionario f: setor.getFuncionarios()){
     		
-    		if(f.getNome().contains(caracteres))
+    		if(f.getNome().contains(caracteres)){
     			funcionarios.add(f.getNome());
-    		
+    		}
     	}
     	
     	return funcionarios;

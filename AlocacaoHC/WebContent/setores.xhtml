@@ -10,8 +10,7 @@
 
 <h:body >
 
-	<p:dataTable var="setor" value="#{setoresView.setores}">
-	
+	<p:dataTable var="setor" value="#{setoresView.setores}" >
 	   <p:column headerText="Nome Setor">
 	   
 	        <h:outputText value="#{setor.nome}" />
@@ -36,12 +35,14 @@
 	       <h:outputText value="&#160;&#160;" />
 	       
 	       <p:autoComplete id="acSimple" value="#{setoresView.funcionarioSelecionado}" 
-	           completeMethod="#{setoresView.listaFuncionarios}" placeholder="nome do funcionário" />
+	           completeMethod="#{setoresView.listaFuncionarios}" placeholder="nome do funcionário" >
+	           <f:attribute name="setor" value="#{setor}" />
+	       </p:autoComplete>
 	       <h:outputText value="&#160;&#160;" />
 	       
 	       <p:commandButton  icon="ui-icon-pencil"  update="growl2" 
 	         actionListener="#{setoresView.showEditarFuncionario}" >
-             <p:ajax event="dialogReturn" listener="#{setoresView.retornoEditarFuncionario}"  update="growl" />
+             <p:ajax event="dialogReturn" listener="#{setoresView.retornoEditarFuncionario}"  update="growl2" />
           </p:commandButton>
 	    </p:column>
 	       

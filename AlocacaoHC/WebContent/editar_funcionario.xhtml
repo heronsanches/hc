@@ -1,55 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-
-<h:form >
-    <p:panel header="Editar Funcionário">
-      
-        <p:messages autoUpdate="true"/>
-       
-        <h:panelGrid id="grid" columns="4" cellpadding="5">
-            <h:outputLabel for="name" value="Nome:" style="font-weight:bold"/>                    
-            <p:inputText id="name" value="#{setoresView.novoNomeFuncionario}" required="true"
-             label="Nome" placeholder="#{funcionario.nome}"/>
-            <p:message for="name" />
-            <h:outputText value="#{setoresView.novoNomeFuncionario}" />
- 
-            <h:outputLabel for="cpf" value="CPF:" style="font-weight:bold"/>                    
-            <p:inputText id="cpf" value="#{setoresView.novoCPF}" label="CPF">
-            </p:inputText>
-            <p:message for="cpf" />
-            <h:outputText value="#{setoresView.novoCPF}" />
- 
-            <h:outputLabel for="email" value="Email:" style="font-weight:bold"/>                    
-            <p:inputText id="email" value="#{setoresView.novoEmail}" converterMessage="Por favor preencha com o email.">
-            </p:inputText>
-            <p:message for="email" />
-            <h:outputText value="#{setoresView.novoEmail}" />
- 
-            <h:outputLabel for="cep" value="CEP:" style="font-weight:bold"/>                   
-            <p:inputText id="cep" value="#{setoresView.novoCEP}" label="CEP">
-            </p:inputText>
-            <p:message for="cep" />
-            <h:outputText value="#{setoresView.novoCEP}">
-            </h:outputText>
- 
-            <h:outputLabel for="telefone" value="Novo telefone:" style="font-weight:bold"/>                    
-            <p:inputText id="telefone" value="#{setoresView.novoTelefone}" >
-            </p:inputText>
-            <p:message for="telefone" />
-            <h:outputText value="#{setoresView.novoTelefone}" />
- 
-           
-        </h:panelGrid>
- 
-      <p:commandButton value="Atualizar" 
-         actionListener="#"/>
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core">
    
-    </p:panel>
+<h:head><title>Editar Funcionário</title></h:head>
+
+<h:body >
+<h:form >
+    <p:growl id="msgs" showDetail="true" />
+         
+    <h:panelGrid columns="2" cellpadding="5">
+        
+        <p:messages autoUpdate="true"/>
+        <p:inputText id="novoNome" value="#{setoresView.novoNome}" placeholder="novo nome" 
+            required="true" label="Novo nome">
+        </p:inputText>
+        <p:message for="novoNome"/>
+
+        <p:inputText id="cpf" value="#{setoresView.novoCPF}" label="CPF" required="true"
+            placeholder="novo cpf" />
+        <p:message for="cpf" />
+
+        <p:inputText id="email" value="#{setoresView.novoEmail}" required="true" 
+            placeholder="novo email" />
+        <p:message for="email" />
+
+        <p:inputText id="cep" value="#{setoresView.novoCEP}" label="CEP" required="true"
+            placeholder="novo cep" />
+        <p:message for="cep" />
+
+        <p:inputText id="telefone" value="#{setoresView.novoTelefone}" required="true"
+            placeholder="novo telefone" />
+        <p:message for="telefone" />
+        
+     </h:panelGrid>  
+    
+     <p:commandButton value="Atualizar" actionListener="#{setoresView.fecharDialogEditarFuncionario()}"/>
+      
 </h:form>
+</h:body>
 </html>

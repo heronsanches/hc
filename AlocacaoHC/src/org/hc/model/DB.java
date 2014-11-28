@@ -1,6 +1,7 @@
 package org.hc.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hc.enums.DiaDaSemana;
@@ -39,6 +40,32 @@ public class DB {
 	public List<Setor> getSetores() {
 		return setores;
 	}
+	
+	/*public void updateFuncionario(String ns, String nf, Funcionario nnf){
+
+		Iterator<Setor> is = setores.iterator();
+		Funcionario f;
+		Setor s;
+		while(is.hasNext()){
+			if((s = is.next()).getNome().equals(ns)){
+				Iterator<Funcionario> iff = s.getFuncionarios().iterator();
+				while(iff.hasNext()){
+					if(iff.next().getNome().equals(nf)){
+						iff.remove();
+						f = new Funcionario();
+						f.setCep(nnf.getCep());
+						f.setCpf(nnf.getCpf());
+						f.setEmail(nnf.getEmail());
+						f.setNome(nnf.getNome());
+						f.setTelefone(nnf.getTelefone());
+						s.cadFuncionario(f);
+					}
+				}
+			}
+		}
+		
+		
+	}*/
 
 	/**Inicializa DB com {@linkplain DB#QTDE_SETORES} e cada setor possuindo
 	 * {@linkplain DB#QTDE_FUNCIONARIOS_SETOR}. Cada funcionário inicializa
@@ -48,7 +75,7 @@ public class DB {
 		Funcionario f;
 		Perfil p;
 		setores = new ArrayList<Setor>();
-		
+
 		for(int ns=1; ns<=QTDE_SETORES; ns++){
 			
 			s = new Setor();
