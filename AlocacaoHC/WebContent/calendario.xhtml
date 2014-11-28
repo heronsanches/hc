@@ -8,37 +8,41 @@
 <h:head>
 	<title>Administrar Setores</title>
 	<script type="text/javascript">
-	PrimeFaces.locales['pt'] = {
-		    closeText: 'Fechar',
-		    prevText: 'Anterior',
-		    nextText: 'Próximo',
-		    currentText: 'Hoje',
-		    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-		    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
-		    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-		    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
-		    dayNamesMin: ['D','S','T','Q','Q','S','S'],
-		    weekHeader: 'Semana',
-		    firstDay: 0,
-		    isRTL: false,
-		    showMonthAfterYear: false,
-		    yearSuffix: '',
-		    timeOnlyTitle: 'Só Horas',
-		    timeText: 'Tempo',
-		    hourText: 'Hora',
-		    minuteText: 'Minuto',
-		    secondText: 'Segundo',
-		    ampm: false,
-		    month: 'Mês',
-		    week: 'Semana',
-		    day: 'Dia',
-		    allDayText : 'Todo o Dia'
+		PrimeFaces.locales['pt'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Hoje',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 0,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só Horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo o Dia'
 		};
-</script>
-<style type="text/css">
-    .value {
-        width: 1000px;
-    }
+	</script>
+	<style type="text/css">
+.value {
+	width: 1000px;
+}
 </style>
 </h:head>
 <ui:decorate template="menubar.xhtml" />
@@ -47,10 +51,27 @@
 
 	<h:form>
 		<p:growl id="messages" showDetail="true" />
+		<p:panel header="Escolha um setor" style="margin-bottom:10px;">
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="setor" value="Setor: " />
+				<p:selectOneMenu id="setor" value="#{scheduleView.setor}"
+					style="width:150px">
+					<p:ajax listener="#{scheduleView.onSetorChange}" update="schedule" />
+					<f:selectItem itemLabel=" - Selecione - " itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{scheduleView.setores}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
 
+			<p:separator />
+
+			<p:commandButton value="Submit" update="messages"
+				actionListener="#{scheduleView.displayLocation}"
+				icon="ui-icon-check" />
+		</p:panel>
 		<h:panelGrid columnClasses="value">
 			<p:schedule id="schedule" value="#{scheduleView.eventModel}"
-				widgetVar="myschedule" locale="pt">
+				widgetVar="myschedule" locale="pt" >
 
 				<p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}"
 					update="eventDetails" oncomplete="PF('eventDialog').show();" />
