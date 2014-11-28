@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:form >
+    <p:panel header="Editar Funcionário">
+      
+        <p:messages autoUpdate="true"/>
+       
+        <h:panelGrid id="grid" columns="4" cellpadding="5">
+            <h:outputLabel for="name" value="Nome:" style="font-weight:bold"/>                    
+            <p:inputText id="name" value="#{setoresView.novoNomeFuncionario}" required="true"
+             label="Nome" placeholder="#{funcionario.nome}"/>
+            <p:message for="name" />
+            <h:outputText value="#{setoresView.novoNomeFuncionario}" />
+ 
+            <h:outputLabel for="cpf" value="CPF:" style="font-weight:bold"/>                    
+            <p:inputText id="cpf" value="#{setoresView.novoCPF}" label="CPF">
+            </p:inputText>
+            <p:message for="cpf" />
+            <h:outputText value="#{setoresView.novoCPF}" />
+ 
+            <h:outputLabel for="email" value="Email:" style="font-weight:bold"/>                    
+            <p:inputText id="email" value="#{setoresView.novoEmail}" converterMessage="Por favor preencha com o email.">
+            </p:inputText>
+            <p:message for="email" />
+            <h:outputText value="#{setoresView.novoEmail}" />
+ 
+            <h:outputLabel for="cep" value="CEP:" style="font-weight:bold"/>                   
+            <p:inputText id="cep" value="#{setoresView.novoCEP}" label="CEP">
+            </p:inputText>
+            <p:message for="cep" />
+            <h:outputText value="#{setoresView.novoCEP}">
+            </h:outputText>
+ 
+            <h:outputLabel for="telefone" value="Novo telefone:" style="font-weight:bold"/>                    
+            <p:inputText id="telefone" value="#{setoresView.novoTelefone}" >
+            </p:inputText>
+            <p:message for="telefone" />
+            <h:outputText value="#{setoresView.novoTelefone}" />
+ 
+           
+        </h:panelGrid>
+ 
+      <p:commandButton value="Atualizar" 
+         actionListener="#"/>
+   
+    </p:panel>
+</h:form>
+</html>

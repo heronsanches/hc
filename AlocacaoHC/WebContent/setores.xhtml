@@ -11,7 +11,7 @@
 <h:body >
 
 	<p:dataTable var="setor" value="#{setoresView.setores}">
-		
+	
 	   <p:column headerText="Nome Setor">
 	   
 	        <h:outputText value="#{setor.nome}" />
@@ -32,11 +32,17 @@
 	       <p:growl id="growl2" showDetail="true" />
 	       <h:outputText value="&#160;&#160;" />
 	       <p:commandButton icon="ui-icon-script"   update="growl2" actionListener="#{setoresView.showFuncionarios(setor)}">
-             <p:ajax event="dialogReturn" listener="#{setoresView.retornoShowFuncionarioSetor}"  update="growl" />
 	       </p:commandButton>
 	       <h:outputText value="&#160;&#160;" />
-	       <p:commandButton  icon="ui-icon-pencil"  update="growl2" />
 	       
+	       <p:autoComplete id="acSimple" value="#{setoresView.funcionarioSelecionado}" 
+	           completeMethod="#{setoresView.listaFuncionarios}" placeholder="nome do funcionário" />
+	       <h:outputText value="&#160;&#160;" />
+	       
+	       <p:commandButton  icon="ui-icon-pencil"  update="growl2" 
+	         actionListener="#{setoresView.showEditarFuncionario}" >
+             <p:ajax event="dialogReturn" listener="#{setoresView.retornoEditarFuncionario}"  update="growl" />
+          </p:commandButton>
 	    </p:column>
 	       
 	</p:dataTable>
