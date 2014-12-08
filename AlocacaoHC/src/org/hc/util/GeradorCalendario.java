@@ -18,106 +18,70 @@ public class GeradorCalendario {
 		
 		ArrayList<DefaultScheduleEvent> result = new ArrayList<DefaultScheduleEvent>();
 		
-		for (Funcionario funcionario : setor.getFuncionarios()) {
-			Perfil perfil = funcionario.getPerfis().get(0);
-			int ultimoDiaMes = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
-			for (int dia = 1; dia <= ultimoDiaMes; dia++)
-			{
-				for (DiaDaSemana diaDaSemana : funcionario.listarHorarios(perfil).keySet()) {
-					Turno turno = funcionario.listarHorarios(perfil).get(diaDaSemana);
+		Calendar hoje = today();
+		int primeiroDiaMes = getDayOfYearFirstDayOfMonth(hoje);
+		int ultimoDiaMes = getDayOfYearLastDayOfMonth(hoje);
+		for (int dia = primeiroDiaMes; dia <= ultimoDiaMes; dia++)
+		{
+			int funcionariosNoTurnoMatutino = 0;
+			int funcionariosNoTurnoVespertino = 0;
+			hoje.set(Calendar.DAY_OF_YEAR, dia);
+			String nomeFuncionariosNoTurnoMatutino = null;
+			String nomeFuncionariosNoTurnoVespertino = null;
 
-					if (turno != null)
-					{
-						Calendar dataInicio = (Calendar)today().clone();
-						Calendar dataFim = (Calendar)today().clone();
+			for (Funcionario funcionario : setor.getFuncionarios()) {
+				
+				//if (funcionariosNoTurnoMatutino == 2 && funcionariosNoTurnoVespertino == 2) break;
+				
+				Perfil perfil = funcionario.getPerfis().get(0);
+				DiaDaSemana diaDaSemana = toDiaDaSemana(hoje.get(Calendar.DAY_OF_WEEK));
+				
+				Turno turno = null;
+				if ((turno = funcionario.listarHorarios(perfil).get(diaDaSemana)) != null)
+				{
+					Calendar dataInicio = (Calendar)hoje.clone();
+					Calendar dataFim = (Calendar)hoje.clone();
+					
+					dataInicio.setTimeZone(TimeZone.getTimeZone("BRT"));
+					dataFim.setTimeZone(TimeZone.getTimeZone("BRT"));
+					
+					if (turno == Turno.MATUTINO) {
+						dataInicio.set(Calendar.HOUR, 8);
+						dataInicio.set(Calendar.MINUTE, 0);
+						dataInicio.set(Calendar.SECOND, 0);
+						dataInicio.set(Calendar.AM_PM, Calendar.AM);
+						dataFim.set(Calendar.HOUR, 2);
+						dataFim.set(Calendar.MINUTE, 0);
+						dataFim.set(Calendar.SECOND, 0);
+						dataFim.set(Calendar.AM_PM, Calendar.PM);
 						
-						dataInicio.set(Calendar.DAY_OF_MONTH, dia);
-						dataFim.set(Calendar.DAY_OF_MONTH, dia);
-						dataInicio.setTimeZone(TimeZone.getTimeZone("BRT"));
-						dataFim.setTimeZone(TimeZone.getTimeZone("BRT"));
+						funcionariosNoTurnoMatutino++;
 						
-						if (turno == Turno.MATUTINO) {
-							dataInicio.set(Calendar.HOUR, 8);
-							dataInicio.set(Calendar.MINUTE, 0);
-							dataInicio.set(Calendar.SECOND, 0);
-							dataInicio.set(Calendar.AM_PM, Calendar.AM);
-							dataFim.set(Calendar.HOUR, 2);
-							dataFim.set(Calendar.MINUTE, 0);
-							dataFim.set(Calendar.SECOND, 0);
-							dataFim.set(Calendar.AM_PM, Calendar.PM);
+						if (funcionariosNoTurnoMatutino == 2) {
+							funcionariosNoTurnoMatutino = 0;
+							DefaultScheduleEvent event = new DefaultScheduleEvent(nomeFuncionariosNoTurnoMatutino + " & " + funcionario.getNome(), dataInicio.getTime(), dataFim.getTime());
+							result.add(event);
 						}
-						else if (turno == Turno.VESPERTINO) {
-							dataInicio.set(Calendar.HOUR, 2);
-							dataInicio.set(Calendar.MINUTE, 0);
-							dataInicio.set(Calendar.SECOND, 0);
-							dataInicio.set(Calendar.AM_PM, Calendar.PM);
-							dataFim.set(Calendar.HOUR, 8);
-							dataFim.set(Calendar.MINUTE, 0);
-							dataFim.set(Calendar.SECOND, 0);
-							dataFim.set(Calendar.AM_PM, Calendar.PM);
-						}
+						else nomeFuncionariosNoTurnoMatutino = funcionario.getNome(); 
+					}
+					else if (turno == Turno.VESPERTINO) {
+						dataInicio.set(Calendar.HOUR, 2);
+						dataInicio.set(Calendar.MINUTE, 0);
+						dataInicio.set(Calendar.SECOND, 0);
+						dataInicio.set(Calendar.AM_PM, Calendar.PM);
+						dataFim.set(Calendar.HOUR, 8);
+						dataFim.set(Calendar.MINUTE, 0);
+						dataFim.set(Calendar.SECOND, 0);
+						dataFim.set(Calendar.AM_PM, Calendar.PM);
 						
-						int primeiroSabado = lastDayOfWeek(dataInicio);
-						if (dia <= primeiroSabado)
-						{
-							dataInicio.set(Calendar.WEEK_OF_MONTH, 1);
-							dataFim.set(Calendar.WEEK_OF_MONTH, 1);
-						}
-						else if (dia <= primeiroSabado + 7)
-						{
-							dataInicio.set(Calendar.WEEK_OF_MONTH, 2);
-							dataFim.set(Calendar.WEEK_OF_MONTH, 2);
-						}
-						else if (dia <= primeiroSabado + 14)
-						{
-							dataInicio.set(Calendar.WEEK_OF_MONTH, 3);
-							dataFim.set(Calendar.WEEK_OF_MONTH, 3);
-						}
-						else if (dia <= primeiroSabado + 21)
-						{
-							dataInicio.set(Calendar.WEEK_OF_MONTH, 4);
-							dataFim.set(Calendar.WEEK_OF_MONTH, 4);
-						}
-						else //if (dia <= ultimoDiaMes)
-						{
-							dataInicio.set(Calendar.WEEK_OF_MONTH, 5);
-							dataFim.set(Calendar.WEEK_OF_MONTH, 5);
-						}
+						funcionariosNoTurnoVespertino++;
 						
-						switch (diaDaSemana) {
-						case DOM:
-							dataInicio.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-							dataFim.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-							break;
-						case SEG:
-								dataInicio.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-								dataFim.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-								break;
-						case TER:
-								dataInicio.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-								dataFim.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-								break;
-						case QUA:
-								dataInicio.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-								dataFim.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-								break;
-						case QUI:
-								dataInicio.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-								dataFim.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-								break;
-						case SEX:
-								dataInicio.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-								dataFim.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-								break;
-						case SAB:
-								dataInicio.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-								dataFim.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-								break;
-						default:
-							break;
+						if (funcionariosNoTurnoVespertino == 2) {
+							funcionariosNoTurnoVespertino = 0;
+							DefaultScheduleEvent event = new DefaultScheduleEvent(nomeFuncionariosNoTurnoVespertino + " & " + funcionario.getNome(), dataInicio.getTime(), dataFim.getTime());
+							result.add(event);
 						}
-						DefaultScheduleEvent event = new DefaultScheduleEvent(funcionario.getNome(), dataInicio.getTime(), dataFim.getTime());
-						result.add(event);
+						else nomeFuncionariosNoTurnoVespertino = funcionario.getNome();
 					}
 				}
 			}
@@ -126,7 +90,7 @@ public class GeradorCalendario {
 
 	}
 	
-    public static int lastDayOfWeek(Calendar calendar){  
+    public static int lastDayOfWeek(Calendar calendar) {  
     	Calendar cal = Calendar.getInstance();
 		cal.setFirstDayOfWeek(Calendar.SUNDAY);
 		cal.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
@@ -136,7 +100,63 @@ public class GeradorCalendario {
         }  
         return cal.get(Calendar.WEEK_OF_MONTH);
    }
+    
+    public static int getDayOfYearFirstDayOfMonth(Calendar calendar) {  
+    	Calendar cal = Calendar.getInstance();
+		cal.setFirstDayOfWeek(Calendar.SUNDAY);
+		cal.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
+        return cal.get(Calendar.DAY_OF_YEAR);  
+   }
 	
+    public static int getDayOfYearLastDayOfMonth(Calendar calendar) {  
+    	Calendar cal = Calendar.getInstance();
+		cal.setFirstDayOfWeek(Calendar.SUNDAY);
+		cal.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return cal.get(Calendar.DAY_OF_YEAR);
+   }
+    
+    private static DiaDaSemana toDiaDaSemana(int dayOfWeek) {
+    	switch (dayOfWeek) {
+		case Calendar.SUNDAY:
+				return DiaDaSemana.DOM;
+		case Calendar.MONDAY:
+			return DiaDaSemana.SEG;
+		case Calendar.TUESDAY:
+			return DiaDaSemana.TER;
+		case Calendar.WEDNESDAY:
+			return DiaDaSemana.QUA;
+		case Calendar.THURSDAY:
+			return DiaDaSemana.QUI;
+		case Calendar.FRIDAY:
+			return DiaDaSemana.SEX;
+		case Calendar.SATURDAY:
+			return DiaDaSemana.SAB;
+		default:
+			return DiaDaSemana.DOM;
+		}
+    }
+    
+    private static int toDayOfWeek(DiaDaSemana diaDaSemana) {
+    	switch (diaDaSemana) {
+		case DOM:
+				return Calendar.SUNDAY;
+		case SEG:
+			return Calendar.MONDAY;
+		case TER:
+			return Calendar.TUESDAY;
+		case QUA:
+			return Calendar.WEDNESDAY;
+		case QUI:
+			return Calendar.THURSDAY;
+		case SEX:
+			return Calendar.FRIDAY;
+		case SAB:
+			return Calendar.SATURDAY;
+		default:
+			return Calendar.SUNDAY;
+		}
+    }
+    
 	private static Calendar today() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),

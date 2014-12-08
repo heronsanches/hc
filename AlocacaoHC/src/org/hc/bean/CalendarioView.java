@@ -47,15 +47,18 @@ public class CalendarioView implements Serializable {
 		}
 	}
 
-	public void displayLocation() {
+	public void aceitarSugestao() {
 		FacesMessage messages;
-		if (setor != null)
-			messages = new FacesMessage("Setor: " + setor);
+		if (setor != null) {
+			Setor setorObj = getSetoresBD().get(Integer.parseInt(setor));
+			messages = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sugestão Aceita",
+					"Sugestão aceita para setor " + setorObj.getNome() + ".");
+		}
 		else
-			messages = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid",
+			messages = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
 					"Setor não selecionado.");
 
-		FacesContext.getCurrentInstance().addMessage(null, messages);
+		addMessage(messages);
 	}
 
 	public List<Setor> getSetoresBD(){
@@ -122,6 +125,13 @@ public class CalendarioView implements Serializable {
 
 		event = new DefaultScheduleEvent();
 	}
+	
+	public void delEvent(ActionEvent actionEvent) {
+		if (event.getId() != null)
+			eventModel.deleteEvent(event);
+
+		event = new DefaultScheduleEvent();
+	}
 
 	public void onEventSelect(SelectEvent selectEvent) {
 		event = (ScheduleEvent) selectEvent.getObject();
@@ -134,16 +144,16 @@ public class CalendarioView implements Serializable {
 
 	public void onEventMove(ScheduleEntryMoveEvent event) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Event moved", "Day delta:" + event.getDayDelta()
-				+ ", Minute delta:" + event.getMinuteDelta());
+				"Evento Movido", "Diferença: " + event.getDayDelta()
+				+ " dias e " + event.getMinuteDelta() + " minutos.");
 
 		addMessage(message);
 	}
 
 	public void onEventResize(ScheduleEntryResizeEvent event) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Event resized", "Day delta:" + event.getDayDelta()
-				+ ", Minute delta:" + event.getMinuteDelta());
+				"Event Alterado", "Diferença: " + event.getDayDelta()
+				+ " dias e " + event.getMinuteDelta() + " minutos.");
 
 		addMessage(message);
 	}

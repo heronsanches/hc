@@ -13,11 +13,11 @@ public class DB {
 	private List<Setor> setores;
 	
 	private final int QTDE_SETORES = 3;
-	private final int QTDE_FUNCIONARIOS_SETOR = 84;
+	private final int QTDE_FUNCIONARIOS_SETOR = 24;
 	private static int CONT_FUNCIONARIOS_TOTAL = 0;
 	
-	private final String NOME_SETOR = "Setor";
-	private final String NOME_FUNCIONARIO = "Funcionario";
+	private final String NOME_SETOR = "Setor ";
+	private final String NOME_FUNCIONARIO = "Funcionario ";
 	private final String CPF_FUNCIONARIO = "CPF";
 	private final String CEP_FUNCIONARIO = "CEP";
 	private final String EMAIL_FUNCIONARIO = "Email";
@@ -97,7 +97,8 @@ public class DB {
 				f.setTelefone(TELEFONE_FUNCIONARIO+CONT_FUNCIONARIOS_TOTAL);
 				f.setNome(NOME_FUNCIONARIO+CONT_FUNCIONARIOS_TOTAL);
 				//cadastra somente um horário para um dia deste funcionário, os outros dias ficam sem horario
-				p.addHorario(DiaDaSemana.values()[nf%6], Turno.values()[nf%1]);
+				p.addHorario(DiaDaSemana.values()[nf%6], Turno.values()[nf%2]);
+				p.addHorario(DiaDaSemana.values()[(nf+1)%6], Turno.values()[(nf)%2]);
 				f.addPerfil(p);
 				s.cadFuncionario(f);
 
